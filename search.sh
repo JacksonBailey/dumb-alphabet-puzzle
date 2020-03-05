@@ -76,7 +76,7 @@ unset IFS
 # Contains 4 of 5 vowels, so length must be at least 4.
 # Contains letters of 2 colors of rainbow (plus 2 more letters) so must be at that
 
-min_length=$(( shortest_color_set_length + 2 < 4 ? shortest_color_set_length + 2 : 4 ))
+min_length=$(( shortest_color_set_length + 2 < 4 ? 4 : shortest_color_set_length + 2 ))
 
 lengths=()
 
