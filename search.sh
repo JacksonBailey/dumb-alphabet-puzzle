@@ -41,3 +41,20 @@ for x in "${possible_primes_plus_one[@]}"; do
 done
 
 echo "These are numbers that are one plus a prime and equal to a doubled prime: ${nums_that_fit_criteria[*]}"
+
+vowels=( 'a' 'e' 'i' 'o' 'u' )
+colors=('red' 'orange' 'yellow' 'green' 'blue' 'indigo' 'violet')
+
+# Contains 4 of 5 vowles, so length must be at least 4.
+# Contains letters of 2 colors of rainbow (plus 2 more letters) so must be at least 5ish. (red + 2)
+# I could do it in my head more but we only have 7 left as a valid length.
+
+lengths=()
+
+for x in "${nums_that_fit_criteria[@]}"; do
+    if [ $x -ge 5 ]; then
+        lengths+=($x)
+    fi
+done
+
+echo "Of those, they must be at least 5 characters (2 colors + 2 letters, red + 2): ${lengths[*]}"
