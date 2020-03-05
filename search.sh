@@ -18,3 +18,26 @@ for x in "${primes[@]}"; do
 done
 
 echo "Possible primes based on that: ${possible_primes[*]}"
+
+possible_primes_plus_one=()
+
+for x in "${possible_primes[@]}"; do
+    possible_primes_plus_one+=( $(( x + 1 )) )
+done
+
+echo "Those plus one: ${possible_primes_plus_one[*]}"
+
+# "Criteria" meaning they are one plus a prime (meaning the array possible_primes_plus_one)
+# and that they are twice a prime
+nums_that_fit_criteria=()
+
+for x in "${possible_primes_plus_one[@]}"; do
+    for y in "${possible_primes[@]}"; do
+        if [ $(( y * 2 )) -eq $x ]; then
+            nums_that_fit_criteria+=($y)
+            break
+        fi
+    done
+done
+
+echo "These are numbers that are one plus a prime and equal to a doubled prime: ${nums_that_fit_criteria[*]}"
