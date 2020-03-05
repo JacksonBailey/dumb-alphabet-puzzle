@@ -42,7 +42,7 @@ nums_that_fit_criteria=()
 for x in "${possible_primes_plus_one[@]}"; do
     for y in "${possible_primes[@]}"; do
         if [ $(( y * 2 )) -eq $x ]; then
-            nums_that_fit_criteria+=($y)
+            nums_that_fit_criteria+=( $(( y * 2 )) )
             break
         fi
     done
