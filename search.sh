@@ -2,12 +2,16 @@
 
 set -euo pipefail
 
+###############################################################################
+
 # TODO Manually find primes, for now hard code ones less than 100
 primes=( 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 )
 
 max_length=$(awk 'length > max_length { max_length = length; longest_line = $0 } END { print max_length }' ./words_alpha.txt)
 
 echo "Max length: ${max_length}"
+
+###############################################################################
 
 possible_primes=()
 
@@ -19,6 +23,8 @@ done
 
 echo "Possible primes based on that: ${possible_primes[*]}"
 
+###############################################################################
+
 possible_primes_plus_one=()
 
 for x in "${possible_primes[@]}"; do
@@ -26,6 +32,8 @@ for x in "${possible_primes[@]}"; do
 done
 
 echo "Those plus one: ${possible_primes_plus_one[*]}"
+
+###############################################################################
 
 # "Criteria" meaning they are one plus a prime (meaning the array possible_primes_plus_one)
 # and that they are twice a prime
@@ -41,6 +49,8 @@ for x in "${possible_primes_plus_one[@]}"; do
 done
 
 echo "These are numbers that are one plus a prime and equal to a doubled prime: ${nums_that_fit_criteria[*]}"
+
+###############################################################################
 
 vowels=( 'a' 'e' 'i' 'o' 'u' )
 colors=('red' 'orange' 'yellow' 'green' 'blue' 'indigo' 'violet')
@@ -58,3 +68,5 @@ for x in "${nums_that_fit_criteria[@]}"; do
 done
 
 echo "Of those, they must be at least 5 characters (2 colors + 2 letters, red + 2): ${lengths[*]}"
+
+###############################################################################
