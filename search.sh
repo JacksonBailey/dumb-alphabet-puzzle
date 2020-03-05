@@ -7,9 +7,9 @@ set -euo pipefail
 # TODO Manually find primes, for now hard code ones less than 100
 primes=( 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97 )
 
-max_length=$(awk 'length > max_length { max_length = length; longest_line = $0 } END { print max_length }' ./words_alpha.txt)
+max_length=$(awk 'length > max_length { max_length = length } END { print max_length }' ./words_alpha.txt)
 
-echo "Max length: ${max_length}"
+echo "Max length of any word: ${max_length}"
 
 ###############################################################################
 
@@ -54,20 +54,39 @@ echo "These are numbers that are one plus a prime and equal to a doubled prime: 
 
 vowels=( 'a' 'e' 'i' 'o' 'u' )
 colors=('red' 'orange' 'yellow' 'green' 'blue' 'indigo' 'violet')
+color_letter_sets=()
 
-# Contains 4 of 5 vowles, so length must be at least 4.
-# Contains letters of 2 colors of rainbow (plus 2 more letters) so must be at least 5ish. (red + 2)
-# I could do it in my head more but we only have 7 left as a valid length.
+for i in "${!colors[@]}"; do
+    for j in "${!colors[@]}"; do
+        if [ $i -le $j ]; then
+            continue
+        fi
+        color_letter_sets+=( "$(echo "${colors[$i]}${colors[$j]}" | grep -o . | sort | uniq | tr -d "\n")" )
+    done
+done
+
+IFS=$'\n' sorted_color_letter_sets=( $( sort <<< "${color_letter_sets[*]}" ) )
+unset IFS
+echo "These are the possible letter sets (each can also have two wild cards):
+    ${sorted_color_letter_sets[*]}"
+
+IFS=$'\n' shortest_color_set_length="$(echo "${sorted_color_letter_sets[*]}" | awk 'NR==1 || length < min_length { min_length = length } END { print min_length }')"
+unset IFS
+
+# Contains 4 of 5 vowels, so length must be at least 4.
+# Contains letters of 2 colors of rainbow (plus 2 more letters) so must be at that
+
+min_length=$(( shortest_color_set_length + 2 < 4 ? shortest_color_set_length + 2 : 4 ))
 
 lengths=()
 
 for x in "${nums_that_fit_criteria[@]}"; do
-    if [ $x -ge 5 ]; then
+    if [ $x -ge ${min_length} ]; then
         lengths+=($x)
     fi
 done
 
-echo "Of those, they must be at least 5 characters (2 colors + 2 letters, red + 2): ${lengths[*]}"
+echo "Of those, they must be at least ${min_length} characters (2 colors + 2 letters or 4 vowels): ${lengths[*]}"
 
 ###############################################################################
 
