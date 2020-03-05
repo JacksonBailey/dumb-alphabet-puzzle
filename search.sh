@@ -70,3 +70,16 @@ done
 echo "Of those, they must be at least 5 characters (2 colors + 2 letters, red + 2): ${lengths[*]}"
 
 ###############################################################################
+
+expressions=()
+
+for x in "${lengths[@]}"; do
+    expressions+=("/^.{$x}\$/p ;")
+done
+
+echo "sed expressions to run: ${expressions[*]}"
+
+IFS=' '
+words_with_valid_lengths="$(sed -n -E "${expressions[*]}" words_alpha.txt)"
+
+echo "Found $(echo ${words_with_valid_lengths} | wc -l) words!"
