@@ -116,20 +116,20 @@ done
 
 echo "sed expressions to run: ${expressions[*]}"
 
-IFS=' '
-words_with_valid_lengths="$(sed -n -E "${expressions[*]}" words_alpha.txt)"
+IFS=' ' words_with_valid_lengths="$(sed -n -E "${expressions[*]}" words_alpha.txt)"
+unset IFS
 
-echo "Found $(echo ${words_with_valid_lengths} | wc -l) words with valid lengths!"
+echo "Found $(echo "${words_with_valid_lengths}" | wc -l) words with valid lengths!"
 
 ###############################################################################
 
 # ggrep because mac's grep does not have -P. see here: https://stackoverflow.com/a/45534127/1858327
 
-words_without_a=$(echo ${words_with_valid_lengths} | ggrep -vE '^([^e]*|[^i]*|[^o]*|[^u]*)$' | ggrep -v 'a')
-words_without_e=$(echo ${words_with_valid_lengths} | ggrep -vE '^([^a]*|[^i]*|[^o]*|[^u]*)$' | ggrep -v 'e')
-words_without_i=$(echo ${words_with_valid_lengths} | ggrep -vE '^([^a]*|[^e]*|[^o]*|[^u]*)$' | ggrep -v 'i')
-words_without_o=$(echo ${words_with_valid_lengths} | ggrep -vE '^([^a]*|[^e]*|[^i]*|[^u]*)$' | ggrep -v 'o')
-words_without_u=$(echo ${words_with_valid_lengths} | ggrep -vE '^([^a]*|[^e]*|[^i]*|[^o]*)$' | ggrep -v 'u')
+words_without_a="$(echo "${words_with_valid_lengths}" | ggrep -vE '^([^e]*|[^i]*|[^o]*|[^u]*)$' | ggrep -v 'a')"
+words_without_e="$(echo "${words_with_valid_lengths}" | ggrep -vE '^([^a]*|[^i]*|[^o]*|[^u]*)$' | ggrep -v 'e')"
+words_without_i="$(echo "${words_with_valid_lengths}" | ggrep -vE '^([^a]*|[^e]*|[^o]*|[^u]*)$' | ggrep -v 'i')"
+words_without_o="$(echo "${words_with_valid_lengths}" | ggrep -vE '^([^a]*|[^e]*|[^i]*|[^u]*)$' | ggrep -v 'o')"
+words_without_u="$(echo "${words_with_valid_lengths}" | ggrep -vE '^([^a]*|[^e]*|[^i]*|[^o]*)$' | ggrep -v 'u')"
 
 words_with_4_vowels="${words_without_a}
 ${words_without_e}
