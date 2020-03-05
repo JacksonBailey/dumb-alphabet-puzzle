@@ -61,7 +61,7 @@ for i in "${!colors[@]}"; do
         if [ $i -le $j ]; then
             continue
         fi
-        color_letter_sets+=( "$(echo "${colors[$i]}${colors[$j]}" | grep -o . | sort | uniq | tr -d "\n")" )
+        color_letter_sets+=( "$(echo "${colors[$i]}${colors[$j]}" | grep -o . | sort | tr -d "\n")" )
     done
 done
 
@@ -87,6 +87,24 @@ for x in "${nums_that_fit_criteria[@]}"; do
 done
 
 echo "Of those, they must be at least ${min_length} characters (2 colors + 2 letters or 4 vowels): ${lengths[*]}"
+
+###############################################################################
+
+color_letter_sets_with_valid=()
+
+# Check wildcards
+for x in "${sorted_color_letter_sets[@]}"; do
+    for len in "${lengths[*]}"; do
+        if [ $(( ${#x} + 2 )) -eq "${len}" ]; then
+            color_letter_sets_with_valid+=($x)
+            break
+        fi
+    done
+done
+
+# Note, if the color sets contain unique letters (to be used multiple times) the code breaks here
+
+echo "Color sets with valid lengths (due to wildcards): ${color_letter_sets_with_valid[*]}"
 
 ###############################################################################
 
