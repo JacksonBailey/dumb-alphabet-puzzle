@@ -140,3 +140,18 @@ ${words_without_u}"
 # No need to make sure these are unique, a word having exactly 4 vowels cannot have a different 4
 
 echo "Found $(echo "${words_with_4_vowels}" | wc -l) words with 4 vowels and valid lengths!"
+
+###############################################################################
+
+letters=( 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n' 'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z' )
+color_sets_plus_wildcards=()
+
+for l1 in "${letters[@]}"; do
+    for l2 in "${letters[@]}"; do
+        for set in "${color_letter_sets_with_valid[@]}"; do
+            color_sets_plus_wildcards+=( "$(echo "${set}${l1}${l2}" | grep -o . | sort | tr -d "\n")" )
+        done
+    done
+done
+
+echo "Calculated all color sets plus their wild cards"
