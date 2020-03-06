@@ -117,7 +117,6 @@ done
 echo "sed expressions to run: ${expressions[*]}"
 
 IFS=' ' words_with_valid_lengths="$(sed -n -E "${expressions[*]}" words_alpha.txt)"
-unset IFS
 
 echo "Found $(echo "${words_with_valid_lengths}" | wc -l) words with valid lengths!"
 
@@ -155,3 +154,14 @@ for l1 in "${letters[@]}"; do
 done
 
 echo "Calculated all color sets plus their wild cards"
+
+###############################################################################
+
+while IFS= read -r word; do
+    sorted_word="$(echo "${word}" | grep -o . | sort | tr -d "\n")"
+    for set in "${color_sets_plus_wildcards[@]}"; do
+        if [ "${sorted_word}" == ${set} ]; then
+            echo "${word}"
+        fi
+    done
+done <<< "${words_with_4_vowels}"

@@ -1,0 +1,16 @@
+Max length of any word: 31
+Possible primes based on that: 2 3 5 7 11 13
+Those plus one: 3 4 6 8 12 14
+These are numbers that are one plus a prime and equal to a doubled prime: 4 6 14
+These are the possible letter sets (each can also have two wild cards):
+    abeeglnoru adeegnorr adeggiinnoor aeeeggnnorr aeegilnoortv aeegllnoorwy bdeelru bdegiilnou beeeglnru beeillotuv beelllouwy ddegiinor deeegnrr deeggiinnor deeilortv deellorwy degiiilnootv degiillnoowy eeegilnortv eeegllnorwy eeilllootvwy
+Of those, they must be at least 9 characters (2 colors + 2 letters or 4 vowels): 14
+Color sets with valid lengths (due to wildcards): adeggiinnoor aeegilnoortv aeegllnoorwy degiiilnootv degiillnoowy eeilllootvwy
+sed expressions to run: /^.{14}$/p ;
+Found    14148 words with valid lengths!
+Found     6100 words with 4 vowels and valid lengths!
+Calculated all color sets plus their wild cards
+conglomerative
+conglomerative
+protevangelion
+protevangelion
